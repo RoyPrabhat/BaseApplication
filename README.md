@@ -1,43 +1,24 @@
-# SqrrlAndroidDemo
+New Archietecture Components implemented
 
-SqrrlAndroidDemo:-
+1.) View Model
+2.) Repository pattern
+3.) Fragment architecture
 
-A simple app to display a list of sdog breeds and a list of images of a breed
+Still to implement :-
 
-Features of the application:-
-
-1.) One activity with a list of dogs
-
-2.) One activity to displau a list of images
-
-
-Design decisions:-
-
-1.) Use of new android architecture components like View model, Live data
-
-2.) Use of repository pattern/
-
-3.) Use of picasso library as it provides caching and disk-level caching of images for faster loads
-
-Note:-
-
-1.) Dagger 2 has not been implemented as i am not aware of it but will be learning about it in the future
-
-Steps to run the project
-
-1.) Clone Repository.
-
-2.) Open the project in android studio.
-
-3.) Run the application.
-
-Steps to build apk the project
-
-1.) Clone Repository.
-
-2.) Open the project in android studio.
-
-3.) Go to Build -> Build Bundle(s) / Build APK (s) --> Build APK(s).
-
-Troubleshooting
-Email Contact : royprabhat6@gmail.com
+1.) View model to work properly on configuration changes
+2.) Dagger 2
+3.) Data binding
+4.) Interceptor pattern with retrofit
+5.) Navigation library
+6.) material design
+7.) Base Classes for
+    a.) Activity
+    b.) View model
+    c.) BaseApplication
+8.) Retrofit error handling
+9.) passing data between different fragments via view mode
+10.) Single Activity architecture
+11.) pagination
+12.) click listener into view model
+13.) Progressbar with the help of base activity and view model
