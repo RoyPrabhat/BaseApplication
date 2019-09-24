@@ -1,14 +1,15 @@
 package com.example.sqrrlandriodtask.repository;
 
-import android.media.Image;
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.sqrrlandriodtask.api.DogsApiClient;
 import com.example.sqrrlandriodtask.api.DogsApiService;
 import com.example.sqrrlandriodtask.model.BreedsList;
 import com.example.sqrrlandriodtask.model.ImagesList;
+
 import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +35,7 @@ public class DogsRepository {
         final MutableLiveData<ArrayList<String>> mBreedList = new MutableLiveData<>();
         mDogsAPIService.getBreedList().enqueue(new Callback<BreedsList>() {
             @Override
-            public void onResponse(Call<BreedsList> call, Response<BreedsList> response) {
+            public void onResponse(@NonNull Call<BreedsList> call, Response<BreedsList> response) {
                 if (response.isSuccessful()) {
                     mBreedList.setValue(response.body().getBreedList());
                 }

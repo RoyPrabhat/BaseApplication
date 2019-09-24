@@ -3,13 +3,15 @@ package com.example.sqrrlandriodtask.view.splash;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.sqrrlandriodtask.R;
 import com.example.sqrrlandriodtask.view.breedlist.BreedListActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    public static int SLEEP_TIME = 1500;
+    public static int SPLASH_SCREEN_TIME = 1500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,6 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             }
 
-        }, SLEEP_TIME);
+        }, SPLASH_SCREEN_TIME);
     }
 }
