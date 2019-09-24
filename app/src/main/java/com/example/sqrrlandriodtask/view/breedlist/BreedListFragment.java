@@ -5,26 +5,56 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.sqrrlandriodtask.R;
 import com.example.sqrrlandriodtask.adapter.BreedListAdapter;
+import com.example.sqrrlandriodtask.base.MyApplication;
 import com.example.sqrrlandriodtask.constant.Constants;
 import com.example.sqrrlandriodtask.view.imagelist.ImageListActivity;
 import com.example.sqrrlandriodtask.viewmodel.BreedListViewModel;
+
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 public class BreedListFragment extends Fragment {
 
 
     private ArrayList<String> mBreedList;
-    private BreedListViewModel mViewModel;
     private RecyclerView mBreedRecyclerView;
     private BreedListAdapter mBreedListAdapter;
+
+    @Inject
+    ViewModelProvider.Factory mViewModelFactory;
+
+    private BreedListViewModel mBreedListViewModel;
+
+    public BreedListFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
+        ((MyApplication) getActivity().getApplication())
+                .getApplicationComponent()
+                .inject(this);
+    }
+
+    // TODO make common BaseFragmnet/BaseActivity
+//    public static BreedListFragment newInstance() {
+//        return new BreedListFragment();
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,12 +77,14 @@ public class BreedListFragment extends Fragment {
     }
 
     private void initializeViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(BreedListViewModel.class);
-        mViewModel.fetchBreedList();
+        mBreedListViewModel = ViewModelProviders.of(this, mViewModelFactory)
+                .get(BreedListViewModel.class);
+
+        mBreedListViewModel.fetchBreedList();
     }
 
     private void initializeObserver() {
-        mViewModel.getBreedList().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
+        mBreedListViewModel.getBreedList().observe(getViewLifecycleOwner(), new Observer<ArrayList<String>>() {
             @Override
             public void onChanged(ArrayList<String> breedsList) {
                 mBreedList.addAll(breedsList);

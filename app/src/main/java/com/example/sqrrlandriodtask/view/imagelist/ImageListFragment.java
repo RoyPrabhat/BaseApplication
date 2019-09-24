@@ -8,26 +8,47 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sqrrlandriodtask.R;
 import com.example.sqrrlandriodtask.adapter.ImageListAdapter;
+import com.example.sqrrlandriodtask.base.MyApplication;
 import com.example.sqrrlandriodtask.constant.Constants;
 import com.example.sqrrlandriodtask.model.ImagesList;
 import com.example.sqrrlandriodtask.viewmodel.ImageListViewModel;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 
 public class ImageListFragment extends Fragment {
 
-    private ImageListViewModel mViewModel;
     private ArrayList<String> mImagesList;
     private RecyclerView mImageRecyclerView;
     private ImageListAdapter imageListAdapter;
     public static final int COLUMN_COUNT = 2;
+    @Inject
+    ViewModelProvider.Factory mViewModelFactory;
+
+    private ImageListViewModel mImageListViewModel;
+
+    public ImageListFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+
+        ((MyApplication) getActivity().getApplication())
+                .getApplicationComponent()
+                .inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,13 +74,14 @@ public class ImageListFragment extends Fragment {
     }
 
     private void initializeViewModel(String dogName) {
-        mViewModel = ViewModelProviders.of(this).get(ImageListViewModel.class);
-        mViewModel.setDogName(dogName);
-        mViewModel.fetchImageList();
+        mImageListViewModel = ViewModelProviders.of(this, mViewModelFactory)
+                .get(ImageListViewModel.class);
+        mImageListViewModel.setDogName(dogName);
+        mImageListViewModel.fetchImageList();
     }
 
     private void initializeObserver() {
-        mViewModel.getImageList().observe(this, new Observer<ImagesList>() {
+        mImageListViewModel.getImageList().observe(this, new Observer<ImagesList>() {
 
             @Override
             public void onChanged(ImagesList imagesList) {

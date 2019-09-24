@@ -1,21 +1,19 @@
 package com.example.sqrrlandriodtask.viewmodel;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.sqrrlandriodtask.model.ImagesList;
 import com.example.sqrrlandriodtask.repository.DogsRepository;
 
-public class ImageListViewModel extends AndroidViewModel {
+public class ImageListViewModel extends ViewModel {
 
     private MutableLiveData<ImagesList> mImageList;
     private String mDogName;
     private DogsRepository mDogsRepository;
-    public ImageListViewModel(@NonNull Application application) {
-        super(application);
+
+    public ImageListViewModel(DogsRepository repository) {
+        this.mDogsRepository = repository;
     }
 
     public void fetchImageList() {

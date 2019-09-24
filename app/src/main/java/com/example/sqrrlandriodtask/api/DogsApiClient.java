@@ -9,7 +9,7 @@ public class DogsApiClient {
     public static final String BASE_API_URL = "https://dog.ceo/api/";
     private static DogsApiClient mAPIClient;
 
-    private DogsApiService mDogsAPIService;
+    private static DogsApiService mDogsAPIService;
 
     public static DogsApiClient getInstance() {
         if (mAPIClient == null) {

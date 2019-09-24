@@ -1,19 +1,19 @@
 package com.example.sqrrlandriodtask.viewmodel;
 
-import android.app.Application;
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
 import com.example.sqrrlandriodtask.repository.DogsRepository;
+
 import java.util.ArrayList;
 
-public class BreedListViewModel extends AndroidViewModel {
+public class BreedListViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<String>> mBreedList;
     private DogsRepository mDogsRepository;
 
-    public BreedListViewModel(@NonNull Application application) {
-        super(application);
+    public BreedListViewModel(DogsRepository repository) {
+        this.mDogsRepository = repository;
     }
 
     public void fetchBreedList() {
