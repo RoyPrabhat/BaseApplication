@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModel;
 import com.example.sqrrlandriodtask.model.ImagesList;
 import com.example.sqrrlandriodtask.repository.DogsRepository;
 
+import javax.inject.Inject;
+
 public class ImageListViewModel extends ViewModel {
 
     private MutableLiveData<ImagesList> mImageList;
     private String mDogName;
     private DogsRepository mDogsRepository;
 
+    @Inject
     public ImageListViewModel(DogsRepository repository) {
         this.mDogsRepository = repository;
     }
