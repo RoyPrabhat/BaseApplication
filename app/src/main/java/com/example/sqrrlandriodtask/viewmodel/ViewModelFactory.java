@@ -6,25 +6,46 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sqrrlandriodtask.repository.DogsRepository;
 
+import java.util.Map;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
+@Singleton
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
+    private final Map<Class<? extends ViewModel>, Provider<ViewModel>> creators;
     private final DogsRepository mDogsRepository;
 
-    public ViewModelFactory(DogsRepository repository) {
+    @Inject
+    public ViewModelFactory(Map<Class<? extends ViewModel>, Provider<ViewModel>> creators, DogsRepository repository) {
+        this.creators = creators;
         mDogsRepository = repository;
     }
 
-    @NonNull
+
+
+    @SuppressWarnings("unchecked")
     @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(BreedListViewModel.class)) {
-            return (T) new BreedListViewModel(mDogsRepository);
-
-        } else if (modelClass.isAssignableFrom(ImageListViewModel.class)) {
-            return (T) new ImageListViewModel(mDogsRepository);
-        } else {
-            throw new IllegalArgumentException("viewModel not present");
-
+    public <T extends ViewModel> T create(Class<T> modelClass) {
+        Provider<? extends ViewModel> creator = creators.get(modelClass);
+        if (creator == null) {
+            for (Map.Entry<Class<? extends ViewModel>, Provider<ViewModel>> entry : creators.entrySet()) {
+                if (modelClass.isAssignableFrom(entry.getKey())) {
+                    creator = entry.getValue();
+                    break;
+                }
+            }
+        }
+        if (creator == null) {
+            throw new IllegalArgumentException("unknown model class " + modelClass);
+        }
+        try {
+            return (T) creator.get();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+
 }

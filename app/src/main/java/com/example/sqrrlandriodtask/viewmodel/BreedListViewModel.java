@@ -7,11 +7,14 @@ import com.example.sqrrlandriodtask.repository.DogsRepository;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class BreedListViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<String>> mBreedList;
     private DogsRepository mDogsRepository;
 
+    @Inject
     public BreedListViewModel(DogsRepository repository) {
         this.mDogsRepository = repository;
     }
